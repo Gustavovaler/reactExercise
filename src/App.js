@@ -12,6 +12,7 @@ class App extends Component {
       todos
       };
       this.handleAddTodo = this.handleAddTodo.bind(this);
+      
   }
 
   handleAddTodo(todo){
@@ -19,13 +20,23 @@ class App extends Component {
       todos: [...this.state.todos, todo]
     })
   }
+  removeTodo(index){
+ if (window.confirm('Are you sure you want to delete it?')) {
+   this.setState({
+    todos: this.state.todos.filter((e,i) =>{
+      return i !== index
+    })
+  })
+ }
+
+  }
 
   
 
   render(){
     const todos = this.state.todos.map((todo, i) => {
       return (
-        <div className="col">
+        <div className="col-md-4" key={i}>
         <div className="card mt-5">
           <div className="card-header">
           <h3>{todo.title}</h3>
@@ -35,7 +46,7 @@ class App extends Component {
             <p>{todo.description}</p>
             <p><mark>{todo.responsible}</mark></p>
             <hr/>
-            <span className="btn btn-danger">Eliminar</span>
+            <button className="btn btn-danger" onClick={this.removeTodo.bind(this,i)}>Eliminar</button>
 
           </div>
         </div>
